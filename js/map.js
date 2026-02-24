@@ -2,11 +2,12 @@
 // variables initiales
 var baselayer = null;
 //données
-var dataterrains = terrains.features.filter(f => f.geometry !== null);
+var dataterrains = terrains.features.filter((f) => {return f.geometry !== null && f.properties.TYPE_TERRAIN !== null && f.properties.PRENOM_NOM !== null});
 //couleurs
-var grismediations = "#444444";
-var jaunemediations = "#F2BE34";
-var rougemediations = "#D72631";
+const lightgray = "#cccccc"
+const grismediations = "#444444";
+const jaunemediations = "#F2BE34";
+const rougemediations = "#D72631";
 
 ///////////////////////// FONCTIONS DE CHARGEMENT DES CARTES //////////////////////////
 getcolor = function(d) {return jaunemediations};
@@ -19,15 +20,24 @@ function loadbasemap(basedata, dataterrains) {
                 container: '#carto',
                 width: 800,
                 height: 600,
-                projection: "Bertin1953"
+                projection: "Bertin1953",
             },
 
             layers:[
                 
                 {type:"layer",
                 geojson: dataterrains,
-                tooltip: d => d.properties.TYPE_TERRAIN + " - " + d.properties.PRENOM_NOM,
-                fill: getcolor()
+                tooltip: d => d.properties.PRENOM_NOM + " - " + d.properties.STATUT + " - " + d.properties.TYPE_TERRAIN   + " - " + d.properties.TERRAIN,
+                stroke: '#ffffff',
+                fill: {
+                    type:"typo",
+                    values:"TYPE_TERRAIN",
+                    colors: [lightgray, jaunemediations, rougemediations],
+                    defaultColor: grismediations,
+                    leg_x:550,
+                    leg_y:20,
+                    leg_title:"Type de terrain de recherche"            
+                }
                 },
 
                 {type: "graticule", stroke: "#888888", strokeWidth: 0.5},
