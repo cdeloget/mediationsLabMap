@@ -127,12 +127,12 @@ fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
 
             d3.selectAll(".terrains path")
                 .on("click", function(event, d) {
-                    let prenom_nom = d.properties.PRENOM_NOM.split(" "); //on reconstitue l'url du profil du membre à partir de son prénom et nom, en les mettant en minuscules et séparés par un tiret
-                    window.open("https://laboratoire-mediations.sorbonne-universite.fr/" + prenom_nom[1].toLowerCase() + "-" + prenom_nom[0].toLowerCase(), "_blank");
+                    let url = d.properties.URL; //on récupère l'url du membre à partir de la propriété URL de la feature cliquée
+                    window.open("https://laboratoire-mediations.sorbonne-universite.fr/" + url, "_blank");
                 }).on("mouseover", function(event, d) {
                     this.style.strokeWidth = "2px"; // bordure plus épaisse au survol
                 }).on("mouseout", function(event, d) {
                     this.style.strokeWidth = "0.5px"; // retour à la bordure normale au départ du survol
                 })
 
-    });
+    })
