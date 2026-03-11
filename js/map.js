@@ -4,7 +4,8 @@ var baselayer = null;
 //données
 var dataterrains = terrains.features.filter((f) => {return f.geometry !== null && f.properties.TYPE_TERRAIN !== null && f.properties.PRENOM_NOM !== null}); //on filtre les données pour ne garder que les terrains avec une géométrie et un nom de membre renseignés
 //couleurs utilisées plusieurs fois
-const lightgray = "#cccccc"
+const lightgray = "#cccccc";
+const verylightgray = "#f5f5f5";
 const grismediations = "#444444";
 const jaunemediations = "#F2BE34";
 const rougemediations = "#D72631";
@@ -17,7 +18,7 @@ const lambert93 = "+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=70000
 function loadbasemap(basedata, dataterrains) { //Charge la carte du monde avec 3 layers : les terrains de recherche, une grille de graticule et une couche de base avec les pays
     return bertin.draw({
             params:{
-                background: "#f5f5f5",
+                background: verylightgray,
                 container: '#carto', //ajout à la div carto
                 width: window.innerWidth * 0.75,
                 height: window.innerHeight * 0.95,
@@ -30,9 +31,12 @@ function loadbasemap(basedata, dataterrains) { //Charge la carte du monde avec 3
                 id: "terrains", //permet de cibler ce groupe pour les événements de clic
                 geojson: dataterrains,
                 tooltip: {
-                    fields:["$PRENOM_NOM", "$STATUT","-  -  -  -  -  -   cliquer pour voir le profil","$TYPE_TERRAIN"],
-                    fontSize: [20, 12, 8, 14],
-                    fontStyle:["bold", "italic","normal", "normal"]
+                    fields:["$TERRAIN","______________________", "$PRENOM_NOM", "$STATUT","-  -  -  -  -  -   cliquer pour voir le profil","______________________","$TYPE_TERRAIN"],
+                    fontSize: [14, 8, 22, 12, 9, 8, 14],
+                    fontStyle:["normal", "normal","bold", "normal","normal", "normal"],
+                    fill: verylightgray,
+                    stroke: "#ffffff",
+                    strokeWidth: 2
                 },
 
                 stroke: '#ffffff',
@@ -61,7 +65,7 @@ function loadfrance(basefrance, dataterrains) {
     return bertin.draw({
         params:{
             projection: lambert93,
-            background: "#f5f5f5",
+            background: verylightgray,
             container: '#carto-france',
             extent: [ [-5.5, 41], [9.5, 51] ], //étendue géographique de la France métropolitaine
         },
@@ -72,9 +76,12 @@ function loadfrance(basefrance, dataterrains) {
                 geojson: dataterrains,
                 symbol_size: 500,
                 tooltip: {
-                    fields:["$PRENOM_NOM", "$STATUT","-  -  -  -  -  -   cliquer pour voir le profil","$TYPE_TERRAIN"],
-                    fontSize: [40, 24, 16, 24],
-                    fontStyle:["bold", "italic","normal", "normal"]
+                    fields:["$TERRAIN", "______________________", "$PRENOM_NOM", "$STATUT","-  -  -  -  -  -   cliquer pour voir le profil","______________________","$TYPE_TERRAIN"],
+                    fontSize: [28, 16, 46, 24, 20, 16, 24],
+                    fontStyle:["normal","normal", "bold", "normal", "normal", "normal"],
+                    fill: verylightgray,
+                    stroke: "#ffffff",
+                    strokeWidth: 2
                 },
 
                 stroke: '#ffffff',
